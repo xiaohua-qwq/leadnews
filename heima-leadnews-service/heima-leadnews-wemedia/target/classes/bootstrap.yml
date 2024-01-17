@@ -1,0 +1,12 @@
+server:
+  port: 51803
+spring:
+  application:
+    name: leadnews-wemedia
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 39.105.170.134:8848
+      config:
+        server-addr: 39.105.170.134:8848
+        file-extension: yml
