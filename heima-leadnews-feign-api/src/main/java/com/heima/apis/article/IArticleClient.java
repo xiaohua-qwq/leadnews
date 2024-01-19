@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient("leadnews-article")
+@FeignClient(value = "leadnews-article", fallback = com.heima.apis.article.fallback.IArticleClient.class)
 public interface IArticleClient {
 
     @PostMapping("/api/v1/article/save")

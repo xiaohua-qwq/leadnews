@@ -22,6 +22,7 @@ import com.heima.utils.thread.WimThreadLocalUtils;
 import com.heima.wemedia.mapper.WmMaterialMapper;
 import com.heima.wemedia.mapper.WmNewsMapper;
 import com.heima.wemedia.mapper.WmNewsMaterialMapper;
+import com.heima.wemedia.service.WmNewsAutoScanService;
 import com.heima.wemedia.service.WmNewsService;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -72,6 +73,9 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
         return responseResult;
     }
 
+    @Autowired
+    private WmNewsAutoScanService wmNewsAutoScanService;
+
     @Override
     public ResponseResult submitNews(WmNewsDto dto) {
         //0.校验传入的参数是否合法
@@ -105,6 +109,9 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
 
         //4.不是草稿 保存文章封面图片与素材的关系
         saveRelativeInfoForCover(dto, wmNews, materials);
+
+        //异步调用审核文章
+        wmNewsAutoScanService.autoScanNews(wmNews.getId());
 
         return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
     }
