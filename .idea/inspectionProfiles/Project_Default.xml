@@ -19,6 +19,7 @@
         <set>
           <option value="java.lang.String" />
           <option value="java.util.List" />
+          <option value="java.util.Map" />
         </set>
       </option>
     </inspection_tool>
