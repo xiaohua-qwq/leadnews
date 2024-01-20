@@ -11,9 +11,9 @@
       "sourceType": "com.heima.common.aliyun.GreenTextScan"
     },
     {
-      "name": "aliyun",
-      "type": "com.heima.common.aliyun.ImageUrlDemo",
-      "sourceType": "com.heima.common.aliyun.ImageUrlDemo"
+      "name": "tess4j",
+      "type": "com.heima.common.tess4j.Tess4jClient",
+      "sourceType": "com.heima.common.tess4j.Tess4jClient"
     }
   ],
   "properties": [
@@ -26,11 +26,6 @@
       "name": "aliyun.access-key-id",
       "type": "java.lang.String",
       "sourceType": "com.heima.common.aliyun.GreenTextScan"
-    },
-    {
-      "name": "aliyun.access-key-id",
-      "type": "java.lang.String",
-      "sourceType": "com.heima.common.aliyun.ImageUrlDemo"
     },
     {
       "name": "aliyun.scenes",
@@ -48,9 +43,14 @@
       "sourceType": "com.heima.common.aliyun.GreenTextScan"
     },
     {
-      "name": "aliyun.secret",
+      "name": "tess4j.data-path",
       "type": "java.lang.String",
-      "sourceType": "com.heima.common.aliyun.ImageUrlDemo"
+      "sourceType": "com.heima.common.tess4j.Tess4jClient"
+    },
+    {
+      "name": "tess4j.language",
+      "type": "java.lang.String",
+      "sourceType": "com.heima.common.tess4j.Tess4jClient"
     }
   ],
   "hints": []

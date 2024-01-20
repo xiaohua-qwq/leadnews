@@ -24,6 +24,7 @@ import com.heima.wemedia.mapper.WmNewsMapper;
 import com.heima.wemedia.mapper.WmNewsMaterialMapper;
 import com.heima.wemedia.service.WmNewsAutoScanService;
 import com.heima.wemedia.service.WmNewsService;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.BeanUtils;
@@ -77,6 +78,7 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
     private WmNewsAutoScanService wmNewsAutoScanService;
 
     @Override
+    @GlobalTransactional
     public ResponseResult submitNews(WmNewsDto dto) {
         //0.校验传入的参数是否合法
         if (dto == null || dto.getContent() == null) {

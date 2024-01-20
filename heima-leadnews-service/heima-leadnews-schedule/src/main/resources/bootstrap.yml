@@ -1,8 +1,8 @@
 server:
-  port: 51803
+  port: 51701
 spring:
   application:
-    name: leadnews-wemedia
+    name: leadnews-schedule
   cloud:
     nacos:
       discovery:
@@ -10,6 +10,3 @@ spring:
       config:
         server-addr: 39.105.170.134:8848
         file-extension: yml
-tess4j:
-  data-path: D:\testDataPath
-  language: chi_sim
