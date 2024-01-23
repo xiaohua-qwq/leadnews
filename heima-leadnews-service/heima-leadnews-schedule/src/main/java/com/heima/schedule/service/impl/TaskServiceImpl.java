@@ -91,22 +91,43 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public boolean cancelTask(long taskId) {
+        boolean flag = false;
         //更改数据库 删除任务信息并修改日志信息
         Task task = updateDB(taskId, ScheduleConstants.CANCELLED);
-        return false;
+
+        //删除Redis缓存中的任务数据
+        if (task != null) {
+            removeTaskFromCache(task);
+            flag = true;
+        }
+        return flag;
+    }
+
+    private void removeTaskFromCache(Task task) {
+        String key = task.getTaskType() + "_" + task.getPriority();
+        if (task.getExecuteTime() <= System.currentTimeMillis()) {
+            cacheService.lRemove(ScheduleConstants.TOPIC + key, 0, JSON.toJSONString(task));
+        } else {
+            cacheService.zRemove(ScheduleConstants.FUTURE + key, JSON.toJSONString(task));
+        }
     }
 
     private Task updateDB(long taskId, int status) {
-        taskinfoMapper.deleteById(taskId); //删除数据库中的任务
+        Task task = null;
+        try {
+            taskinfoMapper.deleteById(taskId); //删除数据库中的任务
 
-        //更新数据库任务日志表 设置为已取消
-        TaskinfoLogs taskinfoLogs = taskinfoLogsMapper.selectById(taskId);
-        taskinfoLogs.setStatus(status);
-        taskinfoLogsMapper.updateById(taskinfoLogs);
+            //更新数据库任务日志表 设置为已取消
+            TaskinfoLogs taskinfoLogs = taskinfoLogsMapper.selectById(taskId);
+            taskinfoLogs.setStatus(status);
+            taskinfoLogsMapper.updateById(taskinfoLogs);
 
-        Task task = new Task();
-        BeanUtils.copyProperties(taskinfoLogs, task);
-        task.setExecuteTime(taskinfoLogs.getExecuteTime().getTime());
+            task = new Task();
+            BeanUtils.copyProperties(taskinfoLogs, task);
+            task.setExecuteTime(taskinfoLogs.getExecuteTime().getTime());
+        } catch (Exception e) {
+            log.error("取消任务时出现异常TaskId:{}", taskId);
+        }
 
         return task;
     }

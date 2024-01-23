@@ -29,4 +29,9 @@ public class TaskServiceImplTest {
         long taskId = taskService.addTask(task);
         System.out.println(taskId);
     }
+
+    @Test
+    public void cancelTask() {
+        taskService.cancelTask(1749254005076971521L);
+    }
 }
