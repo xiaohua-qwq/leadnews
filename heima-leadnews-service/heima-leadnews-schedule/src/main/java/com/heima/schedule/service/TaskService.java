@@ -6,4 +6,8 @@ public interface TaskService {
     public long addTask(Task task);
 
     public boolean cancelTask(long taskId);
+
+    public Task pull(int type, int priority);
+
+    public void refresh();
 }

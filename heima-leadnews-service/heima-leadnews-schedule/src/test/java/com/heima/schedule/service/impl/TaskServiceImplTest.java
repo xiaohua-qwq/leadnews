@@ -21,17 +21,25 @@ public class TaskServiceImplTest {
 
     @Test
     public void addTask() {
-        Task task = new Task();
-        task.setTaskType(100);
-        task.setPriority(50);
-        task.setParameters("task test".getBytes());
-        task.setExecuteTime(new Date().getTime()+500000000);
-        long taskId = taskService.addTask(task);
-        System.out.println(taskId);
+        for (int i = 0; i < 5; i++) {
+            Task task = new Task();
+            task.setTaskType(100 + i);
+            task.setPriority(50);
+            task.setParameters("task test".getBytes());
+            task.setExecuteTime(new Date().getTime() + 5000 * i);
+
+            long taskId = taskService.addTask(task);
+        }
     }
 
     @Test
     public void cancelTask() {
         taskService.cancelTask(1749254005076971521L);
+    }
+
+    @Test
+    public void testPull() {
+        Task task = taskService.pull(100, 50);
+        System.out.println(task);
     }
 }
